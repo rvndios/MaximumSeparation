@@ -1,0 +1,41 @@
+import UIKit
+
+
+extension Array {
+    var middleIndex: Int {
+        return (self.isEmpty ? self.startIndex : self.count - 1) / 2
+    }
+}
+
+
+let viewers = 2
+let noOfSeatsAvailable = 6
+let seatNo = [1,2,3,4,5, 1000]
+
+
+func checkMaximumSeparation() -> Int {
+    var big = seatNo.max() ?? 0
+    var small = seatNo.min() ?? 0
+    var updatedArray = seatNo
+    
+    for index in 2...viewers {
+        if index == 2 {
+            if index == viewers { return (big - small) }
+        } else if index == 3 {
+            updatedArray.removeFirst()
+            updatedArray.removeLast()
+            if index == viewers {
+                return (updatedArray.last ?? 0) - small
+            }
+        }
+        if index >= 4 {
+            updatedArray.removeLast()
+            if index == viewers {
+                return (updatedArray[updatedArray.middleIndex] ) - small
+            }
+        }
+    }
+    return 0
+}
+
+print(checkMaximumSeparation())
